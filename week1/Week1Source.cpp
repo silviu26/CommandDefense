@@ -1,4 +1,6 @@
 #include "Week1Header.h"
+#include <stdio.h>
+#include <fstream>
 
 int Sum(int a, int b) { return a + b; }
 int Dif(int a, int b) { return a - b; }
@@ -56,4 +58,29 @@ void ReadTopScore()
     // print the name with biggest points
 
     // close file
+    FILE* fis_in;
+    char nume_cstigator[30];
+    int scor_castigator=0;
+    char buff[255];
+    int scor;
+    //fis_in = fopen("UserScores.txt", "w");
+    fopen_s(&fis_in, "UserScores.txt", "r");
+    if (fis_in != NULL)
+    {
+        while (fscanf_s(fis_in, "%s", buff, unsigned int( _countof(buff))) != -1)
+        {
+            fscanf_s(fis_in, "%d", &scor);
+            if (scor > scor_castigator)
+            {
+                scor_castigator = scor;
+                strcpy_s(nume_cstigator, buff);
+            }
+        }
+
+        printf("%s", nume_cstigator);
+
+        fclose(fis_in);
+    }
+    else
+        printf("fisier inexistent");
 }
